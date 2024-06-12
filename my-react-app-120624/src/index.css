@@ -27,11 +27,3 @@
   color: hsl(0, 0, 30%)
 }
 
-.button{
-  background-color: hsl(200, 100%, 50%);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-}
