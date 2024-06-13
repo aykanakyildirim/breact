@@ -5,7 +5,7 @@ function List(){
                     {id: 2, name:"orange", calories: 45}, 
                     {id: 3, name: "banana", calories: 105}, 
                     {id: 4, name: "kiwi", calories: 80},
-                    {id 5, name: "coconut", calories: 55}
+                    {id: 5, name: "coconut", calories: 55}
                 ];
     //fruits.sort((a,b)=>a.name.localeCompare(b.name)); //Alphabetical
     const lowCalFruits = fruits.filter(fruit => fruit.calories < 100);
