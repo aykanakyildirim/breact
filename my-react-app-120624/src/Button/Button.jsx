@@ -1,7 +1,11 @@
 import styles from "./Button.module.css"
 
 function Button(){
-    return(<button className={styles.button}>Click me</button>);
+    
+    const handleClick = (e) => e.target.textContent = "HEY!";
+
+
+    return(<button onDoubleClick={(e) => handleClick(e)} className={styles.button}>Click me</button>);
 }
 
 export default Button
