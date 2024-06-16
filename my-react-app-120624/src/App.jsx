@@ -1,8 +1,10 @@
 import Card from "./Card.jsx"
 import Button from "./Button/Button.jsx"
 import Student from "./Student.jsx"
-import UserGreeting from "./UserGreeting.jsx"
+import UserGreeting from "./UserGreeting.jsx";
 import List from "./List.jsx";
+import MyComponent from "./MyComponent.jsx";
+import Counter from "./Counter.jsx";
 
 function App() {
   const fruits =[{id: 1, name: "apple", calories: 95}, 
@@ -19,6 +21,8 @@ function App() {
                 ];
   return(
     <>
+    <MyComponent/>
+    <Counter/>
     <Card></Card>
     <Button/>
     <Student name="Sponge Bob" age={30} isStudent={true}/>
