@@ -15,6 +15,12 @@ function MyComponent(){
 
     const [foods, setFoods]= useState(["Hamburger", "Pizza", "Pasta"]);
 
+    const [books, setBooks] = useState([]);
+    const [bookYear, setBookYear] = useState(new Date().getFullYear());
+    const [bookPublisher, setBookPublisher] = useState("");
+    const [bookGenre, setBookGenre] = useState("");
+
+
     const updateName = ()=>{
         setName("Aykan");
     }
@@ -70,6 +76,32 @@ function MyComponent(){
         setFoods(foods.filter((_, i)=> i!==index));
     }
 
+    function handleAddBook(){
+        const newBook = {year: bookYear, publisher: bookPublisher, genre: bookGenre };
+        setBooks(b =>[...b, newBook]);
+
+        setBookYear(new Date().getFullYear());
+        setBookPublisher("");
+        setBookGenre("");
+        
+    }
+
+    function handleRemoveBook(index){
+        setBooks(b=>b.filter((_,i)=>i!==index));
+    }
+
+    function handleBookYearChange(event){
+        setBookYear(event.target.value);
+    }
+
+    function handleBookPublisherChange(event){
+        setBookPublisher(event.target.value);
+    }
+
+    function handleBookGenreChange(event){
+        setBookGenre(event.target.value);
+    }
+
     return(<div>
         <p>Name: {name}</p>
         <button onClick={updateName}>Set Name</button>
@@ -118,6 +150,22 @@ function MyComponent(){
         </ul>
         <input type="text" id="foodInput" placeholder="Enter food name"/>
         <button onClick={handleAddFood}>Add Food</button>
+
+        <h2>List of Book Objects</h2>
+        <ul>
+            {books.map((book, index) =>
+                <li key={index} onClick={()=>handleRemoveBook(index)}>
+                    {book.year} {book.publisher} {book.genre}
+                </li>)}
+        </ul>
+        <input type="number" value={bookYear} onChange={handleBookYearChange}></input><br/>
+        <input type="text" value={bookPublisher} onChange={handleBookPublisherChange}
+            placeholder="Enter Book Publisher"
+            ></input><br/> 
+        <input type="text" value={bookGenre} onChange={handleBookGenreChange}
+            placeholder="Enter Book Genre"
+            ></input><br/> 
+        <button onClick={handleAddBook}>Add Book</button>
     </div>);
 }
 export default MyComponent
