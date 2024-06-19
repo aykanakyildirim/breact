@@ -34,7 +34,6 @@ function App() {
     <UserGreeting isLoggedIn={false} username="Selim"/>
     {fruits.length>0 ? <List items = {fruits} category="Fruits"/> : null}
     {vegetables.length>0 && <List items = {vegetables} category="Vegetables"></List>}
-
     </>
     
   );

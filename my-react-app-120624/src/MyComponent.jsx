@@ -11,6 +11,10 @@ function MyComponent(){
     const [payment, setPayment] = useState("");
     const [shipping, setShipping]= useState("Delivery");
 
+    const [car, setCar] = useState({year: 2024 , make:"Ford" , model: "Mustang"});
+
+    const [foods, setFoods]= useState(["Hamburger", "Pizza", "Pasta"]);
+
     const updateName = ()=>{
         setName("Aykan");
     }
@@ -41,6 +45,29 @@ function MyComponent(){
 
     function handleShippingChange(event){
         setShipping(event.target.value);
+    }
+
+    function handleYearChange(event){
+        setCar(c=>({...c, year: event.target.value})); //...car is a spread operator
+    }
+
+    function handleMakeChange(event){
+        setCar(c=>({...c, make:event.target.value}));
+    }
+
+    function handleModelChange(event){
+        setCar(c=>({...c, model:event.target.value}));
+    }
+
+    function handleAddFood(){
+        const newFood = document.getElementById("foodInput").value;
+        document.getElementById("foodInput").value= " ";
+
+        setFoods(f=>[...f, newFood]);
+    }
+
+    function handleRemoveFood(index){
+        setFoods(foods.filter((_, i)=> i!==index));
     }
 
     return(<div>
@@ -79,8 +106,18 @@ function MyComponent(){
         </label>
         <p>Shipping: {shipping}</p>
         
-
-
+        <p>Your favorite car is: {car.year} {car.make} {car.model}</p>
+        <input type="number" value={car.year} onChange={handleYearChange}></input><br/>
+        <input type="text" value={car.make} onChange={handleMakeChange}></input><br/>
+        <input type="text" value={car.model} onChange={handleModelChange}></input><br/>
+        
+        <h2>List of Food</h2>
+        <ul>
+            {foods.map((food, index)=> 
+                <li key={index} onClick={()=>handleRemoveFood(index)}>{food}</li>)}
+        </ul>
+        <input type="text" id="foodInput" placeholder="Enter food name"/>
+        <button onClick={handleAddFood}>Add Food</button>
     </div>);
 }
 export default MyComponent
