@@ -16,4 +16,4 @@ function ComponentA(){
     );
 }
 
-export default ComponentA
+export default ComponentA;
