@@ -1,8 +1,12 @@
 from enum import Enum
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path, Query
 from pydantic import BaseModel
 
-app = FastAPI()
+app = FastAPI(
+    title="Inventory API",
+    description="This API is for testing FastAPI features and is not intended for production use.",
+    version="0.1.0",
+)
 
 
 class Category(Enum):
@@ -64,3 +68,47 @@ def query_item_by_parameters(
         "selection": selection
     }
 
+@app.post("/")
+def add_item(item:Item) -> dict[str, Item]:
+    if item.id in items:
+        raise HTTPException(status_code=400, detail=f"Item with {item.id} already exists")
+    items[item.id] = item
+    return {"added": item}
+
+@app.put(
+    "/update/{item_id}",
+    responses={
+        404: {
+            "description": "Item not found"
+        },
+        400: {
+            "description": "No data provided for update"
+        },
+    }
+    )
+def update(
+    item_id: int = Path(ge=0),
+    name: str|None= Query(default=None, min_length=1, max_length=10),
+    price: float|None=Query(default=None, gt=0.0),
+    count: int|None=Query(default=None, ge=0),
+) -> dict[str, Item]:
+    if item_id not in items:
+        raise HTTPException(status_code=404, detail=f"Item with {item_id} not found")
+    if all(info is None for info in (name, price, count)):
+        raise HTTPException(status_code=400, detail="No data provided for update")
+    item = items[item_id]
+    if name is not None:
+        item.name = name
+    if price is not None:
+        item.price = price
+    if count is not None:
+        item.count = count
+    return {"updated": item}
+
+@app.delete("/items/{item_id}")
+def delete_item(item_id:int) -> dict[str, Item]:
+    if item_id not in items:
+        raise HTTPException(status_code=404, detail=f"Item with {item_id} not found")
+    item = items.pop(item_id)
+    return {"deleted": item}
+        
